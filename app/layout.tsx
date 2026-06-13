@@ -13,8 +13,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Feliz Aniversário Lilo!',
-  description: 'Uma lembrança especial.',
+  title: 'Feliz Aniversário meu irmão Lilo!',
+  description: `É tipo um elo que não quebra, uma fonte que não seca
+Um amigo que não deixa a gente desistir
+Você é a paz em meio à guerra, um conselho na hora certa
+Minha sorte é você existir`
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
