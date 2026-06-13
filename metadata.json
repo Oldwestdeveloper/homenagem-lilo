@@ -1,0 +1,6 @@
+{
+  "name": "Homenagem Lilo",
+  "description": "Uma homenagem de aniversário para meu primo irmão, Lilo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
