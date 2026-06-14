@@ -168,8 +168,8 @@ export default function Home() {
                   )}
                 </button>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-[#2d2a26]">Henrique e Juliano - IRMÃO</span>
-                  {/* <span className="text-[10px] opacity-50 text-[#2d2a26]">Henrique e Juliano</span> */}
+                  <span className="text-xs font-bold text-[#2d2a26]">IRMÃO</span>
+                  <span className="text-[10px] opacity-50 text-[#2d2a26]">Henrique e Juliano</span>
                 </div>
                 <div className="ml-auto flex gap-1 items-end h-5">
                   <motion.div animate={isPlaying ? { height: ["40%", "100%", "60%", "100%", "40%"] } : { height: "10%" }} transition={isPlaying ? { repeat: Infinity, duration: 1.2 } : { duration: 0.3 }} className="w-1 bg-[#8b4513]/40 rounded-full"></motion.div>
