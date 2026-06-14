@@ -334,7 +334,7 @@ export default function Home() {
                       Com carinho,
                     </p>
                     <p className="font-playfair text-2xl font-bold text-[#2d2a26] italic">
-                      Guilherme
+                      Guilherme Araujo
                     </p>
                   </div>
                 </div>
