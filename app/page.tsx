@@ -1,61 +1,72 @@
-'use client';
+"use client"
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import Image from 'next/image';
-import { Play, Pause } from 'lucide-react';
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "motion/react"
+import Image from "next/image"
+import { Play, Pause } from "lucide-react"
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [showAdultPhoto, setShowAdultPhoto] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const [showAdultPhoto, setShowAdultPhoto] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   const handleOpen = () => {
-    setIsOpen(true);
+    setIsOpen(true)
     if (audioRef.current) {
-      audioRef.current.volume = 0.5;
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((e) => {
-        console.error('Erro ao tocar áudio (pode estar ausente ou bloqueado):', e);
-      });
+      audioRef.current.volume = 0.5
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true)
+        })
+        .catch((e) => {
+          console.error(
+            "Erro ao tocar áudio (pode estar ausente ou bloqueado):",
+            e,
+          )
+        })
     }
-  };
+  }
 
   const toggleAudio = () => {
     if (audioRef.current) {
       if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
+        audioRef.current.pause()
+        setIsPlaying(false)
       } else {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch((e) => {
-          console.error('Erro ao tocar áudio:', e);
-          alert("O arquivo de áudio não foi encontrado ou não é suportado. Certifique-se de adicionar 'irmao.mp3' na pasta 'public/audio/'.");
-        });
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true)
+          })
+          .catch((e) => {
+            console.error("Erro ao tocar áudio:", e)
+            alert(
+              "O arquivo de áudio não foi encontrado ou não é suportado. Certifique-se de adicionar 'irmao.mp3' na pasta 'public/audio/'.",
+            )
+          })
       }
     }
-  };
+  }
 
   useEffect(() => {
     if (isOpen) {
       // 5 seconds after opening, change the photo from child to adult
       const timer = setTimeout(() => {
-        setShowAdultPhoto(true);
-      }, 5000);
-      return () => clearTimeout(timer);
+        setShowAdultPhoto(true)
+      }, 5000)
+      return () => clearTimeout(timer)
     }
-  }, [isOpen]);
+  }, [isOpen])
 
   return (
-    <main className="relative min-h-[100dvh] lg:h-screen w-full bg-[radial-gradient(circle_at_top_left,#fffdfa_0%,#f7f3ed_100%)] text-[#2d2a26] overflow-x-hidden lg:overflow-hidden">
+    <main className="relative min-h-screen w-full overflow-x-hidden bg-[radial-gradient(circle_at_top_left,#fffdfa_0%,#f7f3ed_100%)] text-[#2d2a26]">
       {/* Hidden audio element */}
-      <audio 
-        ref={audioRef} 
-        src="/audio/irmao.mp3" 
-        loop 
+      <audio
+        ref={audioRef}
+        src="/audio/irmao.mp3"
+        loop
         onError={(e) => console.warn("Erro ao carregar o arquivo de áudio.", e)}
       />
 
@@ -65,16 +76,18 @@ export default function Home() {
             key="intro"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+            exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="flex flex-col items-center justify-center min-h-[100dvh] space-y-12"
+            className="flex min-h-[100dvh] flex-col items-center justify-center space-y-12"
           >
             <div className="space-y-4 text-center">
-              <span className="text-[10px] tracking-[0.3em] uppercase opacity-40 font-bold">Homenagem Especial</span>
-              <h1 className="font-playfair text-6xl sm:text-7xl md:text-8xl text-center text-[#8b4513] italic leading-tight">
-                LILO
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
+                Homenagem Especial
+              </span>
+              <h1 className="font-playfair text-center text-6xl leading-tight text-[#8b4513] italic sm:text-7xl md:text-8xl">
+                Lilo
               </h1>
-              <span className="text-[10px] tracking-[0.3em] uppercase opacity-40 font-bold">
+              <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
                 Cê foi melhor do que eu pedi <br />
                 Quem te mandou foi Deus
               </span>
@@ -83,7 +96,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleOpen}
-              className="px-8 py-4 bg-[#8b4513] text-white uppercase tracking-[0.2em] text-xs hover:bg-[#6b3510] transition-colors shadow-2xl rounded-lg font-bold"
+              className="rounded-lg bg-[#8b4513] px-8 py-4 text-xs font-bold tracking-[0.2em] text-white uppercase shadow-2xl transition-colors hover:bg-[#6b3510]"
             >
               Aqui está o verdadeiro texto!
             </motion.button>
@@ -94,23 +107,32 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full min-h-[100dvh] lg:h-full flex flex-col lg:flex-row relative z-10"
+            className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col overflow-hidden bg-white md:my-8 md:min-h-0 md:rounded-2xl md:shadow-2xl"
           >
-            {/* Left sidebar */}
-            <div className="w-full lg:w-[420px] shrink-0 flex flex-col p-8 lg:p-12 justify-between border-b lg:border-b-0 lg:border-r border-[#e8e2d8] z-20 lg:h-full lg:sticky lg:top-0 bg-[radial-gradient(circle_at_top_left,#fffdfa_0%,#f7f3ed_100%)]">
-              <div className="space-y-1 text-center lg:text-left mb-12 lg:mb-0">
-                <span className="text-[10px] tracking-[0.3em] uppercase opacity-40 font-bold">Homenagem Especial</span>
-                <h1 className="text-5xl font-playfair italic text-[#8b4513] leading-none">Lilo</h1>
-                <p className="text-sm opacity-60 mt-2">É tipo um elo que não quebra, uma fonte que não seca <br />
-                  Um amigo que não deixa a gente desistir <br />
-                  Você é a paz em meio à guerra, um conselho na hora certa <br />
-                  Minha sorte é você existir</p>
+            {/* Header Details (Top) */}
+            <div className="z-20 flex w-full flex-col items-center border-b-0 border-[#e8e2d8] bg-[radial-gradient(circle_at_top_left,#fffdfa_0%,#f7f3ed_100%)] p-6 pb-0 text-center md:border-b md:p-12 md:pb-8">
+              <div className="mt-4 mb-8 space-y-1">
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-40">
+                  Homenagem Especial
+                </span>
+                <h1 className="font-playfair mt-2 text-6xl leading-none text-[#8b4513] italic md:text-7xl">
+                  Lilo
+                </h1>
+                <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed opacity-60 md:mt-6 md:text-[15px]">
+                  É tipo um elo que não quebra, uma fonte que não seca{" "}
+                  <br className="hidden md:block" />
+                  Um amigo que não deixa a gente desistir{" "}
+                  <br className="hidden md:block" />
+                  Você é a paz em meio à guerra, um conselho na hora certa{" "}
+                  <br className="hidden md:block" />
+                  Minha sorte é você existir
+                </p>
               </div>
 
               {/* Photos */}
-              <div className="relative flex items-center justify-center py-10 my-auto lg:my-0">
-                <div className="rotate-3 bg-white p-3 w-64 h-80 border border-[#e5e0d8] shadow-xl relative z-10 transition-transform duration-300 hover:scale-[1.02]">
-                  <div className="relative w-full h-full bg-[#dcd7ce] overflow-hidden">
+              <div className="relative flex w-full items-center justify-center pt-2 pb-6 md:py-8">
+                <div className="relative z-10 h-72 w-60 rotate-3 border border-[#e5e0d8] bg-white p-2.5 shadow-xl transition-transform duration-300 hover:scale-[1.02] md:h-[350px] md:w-72">
+                  <div className="relative h-full w-full overflow-hidden bg-[#dcd7ce]">
                     <AnimatePresence mode="sync">
                       {!showAdultPhoto && (
                         <motion.div
@@ -155,46 +177,99 @@ export default function Home() {
               </div>
 
               {/* Audio indicator */}
-              <div className="bg-white/80 border border-[#e8e2d8] p-4 rounded-2xl flex items-center gap-4 shadow-sm backdrop-blur-md mt-12 lg:mt-0">
-                <button 
-                  onClick={toggleAudio} 
-                  className="w-10 h-10 bg-[#8b4513] rounded-full flex items-center justify-center shadow-inner hover:scale-105 active:scale-95 transition-transform text-white cursor-pointer z-10"
-                  aria-label={isPlaying ? "Pausar música" : "Tocar música"}
-                >
-                  {isPlaying ? (
-                    <Pause size={16} className="fill-current" />
-                  ) : (
-                    <Play size={16} className="fill-current ml-1" />
-                  )}
-                </button>
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-[#2d2a26]">IRMÃO</span>
-                  <span className="text-[10px] opacity-50 text-[#2d2a26]">Henrique e Juliano</span>
+              <div className="mt-6 mb-6 flex w-full max-w-md items-center justify-between rounded-2xl border border-[#e8e2d8] bg-white/90 p-4 shadow-sm backdrop-blur-md md:mt-8 md:mb-0 md:p-5">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={toggleAudio}
+                    className="z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[#8b4513] text-white shadow-inner transition-transform hover:scale-105 active:scale-95"
+                    aria-label={isPlaying ? "Pausar música" : "Tocar música"}
+                  >
+                    {isPlaying ? (
+                      <Pause size={18} className="fill-current" />
+                    ) : (
+                      <Play size={18} className="ml-1 fill-current" />
+                    )}
+                  </button>
+                  <div className="flex flex-col text-left">
+                    <span className="text-sm font-bold tracking-[0.2em] text-[#2d2a26] uppercase md:text-[15px]">
+                      Irmão
+                    </span>
+                    <span className="text-[11px] text-[#2d2a26] opacity-60 md:text-xs">
+                      Henrique e Juliano
+                    </span>
+                  </div>
                 </div>
-                <div className="ml-auto flex gap-1 items-end h-5">
-                  <motion.div animate={isPlaying ? { height: ["40%", "100%", "60%", "100%", "40%"] } : { height: "10%" }} transition={isPlaying ? { repeat: Infinity, duration: 1.2 } : { duration: 0.3 }} className="w-1 bg-[#8b4513]/40 rounded-full"></motion.div>
-                  <motion.div animate={isPlaying ? { height: ["80%", "40%", "100%", "60%", "80%"] } : { height: "20%" }} transition={isPlaying ? { repeat: Infinity, duration: 1.5 } : { duration: 0.3 }} className="w-1 bg-[#8b4513] rounded-full"></motion.div>
-                  <motion.div animate={isPlaying ? { height: ["100%", "60%", "80%", "40%", "100%"] } : { height: "15%" }} transition={isPlaying ? { repeat: Infinity, duration: 1.1 } : { duration: 0.3 }} className="w-1 bg-[#8b4513]/60 rounded-full"></motion.div>
-                  <motion.div animate={isPlaying ? { height: ["60%", "100%", "40%", "80%", "60%"] } : { height: "25%" }} transition={isPlaying ? { repeat: Infinity, duration: 1.3 } : { duration: 0.3 }} className="w-1 bg-[#8b4513]/80 rounded-full"></motion.div>
+                <div className="flex h-6 items-end gap-1.5 pr-2 md:h-7">
+                  <motion.div
+                    animate={
+                      isPlaying
+                        ? { height: ["40%", "100%", "60%", "100%", "40%"] }
+                        : { height: "10%" }
+                    }
+                    transition={
+                      isPlaying
+                        ? { repeat: Infinity, duration: 1.2 }
+                        : { duration: 0.3 }
+                    }
+                    className="w-1.5 rounded-full bg-[#8b4513]/40"
+                  ></motion.div>
+                  <motion.div
+                    animate={
+                      isPlaying
+                        ? { height: ["80%", "40%", "100%", "60%", "80%"] }
+                        : { height: "20%" }
+                    }
+                    transition={
+                      isPlaying
+                        ? { repeat: Infinity, duration: 1.5 }
+                        : { duration: 0.3 }
+                    }
+                    className="w-1.5 rounded-full bg-[#8b4513]"
+                  ></motion.div>
+                  <motion.div
+                    animate={
+                      isPlaying
+                        ? { height: ["100%", "60%", "80%", "40%", "100%"] }
+                        : { height: "15%" }
+                    }
+                    transition={
+                      isPlaying
+                        ? { repeat: Infinity, duration: 1.1 }
+                        : { duration: 0.3 }
+                    }
+                    className="w-1.5 rounded-full bg-[#8b4513]/60"
+                  ></motion.div>
+                  <motion.div
+                    animate={
+                      isPlaying
+                        ? { height: ["60%", "100%", "40%", "80%", "60%"] }
+                        : { height: "25%" }
+                    }
+                    transition={
+                      isPlaying
+                        ? { repeat: Infinity, duration: 1.3 }
+                        : { duration: 0.3 }
+                    }
+                    className="w-1.5 rounded-full bg-[#8b4513]/80"
+                  ></motion.div>
                 </div>
               </div>
             </div>
 
             {/* Letter Content Section */}
-            <div className="flex-1 bg-white relative lg:shadow-2xl z-10 lg:h-full lg:overflow-y-auto overflow-x-hidden">
-              {/* Background L */}
-              <div className="fixed lg:absolute top-0 right-0 p-8 lg:p-12 opacity-[0.03] text-[15rem] font-playfair select-none italic pointer-events-none leading-none -mt-8 -mr-4 overflow-hidden">L</div>
-              
+            <div className="relative z-10 flex-1 overflow-hidden bg-white">
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.2, delay: 0.6, ease: "easeOut" }}
-                className="h-full flex flex-col px-6 py-12 lg:p-16 relative z-10 max-w-3xl mx-auto xl:mx-0 xl:ml-12"
+                className="relative z-10 mx-auto flex h-full max-w-4xl flex-col px-6 py-12 md:px-12 md:py-16"
               >
-                <div className="flex-1 lg:pr-4">
-                  <h2 className="font-playfair text-2xl lg:text-3xl mb-8 lg:mb-12 text-[#8b4513] italic font-bold">Lilo, meu irmão,</h2>
-                  
-                  <div className="font-playfair text-[#4a453e] text-[16px] md:text-[18px] leading-[1.8] space-y-6 text-justify">
+                <div className="flex-1">
+                  <h2 className="font-playfair mb-8 text-2xl font-bold text-[#8b4513] italic md:mb-12 md:text-3xl">
+                    Lilo, meu irmão,
+                  </h2>
+
+                  <div className="font-playfair space-y-6 text-justify text-[16px] leading-[1.8] text-[#4a453e] md:text-[18px]">
                     <p>
                       Hoje o dia é todo seu! Mais do que primos, a vida fez da
                       gente a melhor dupla. É aquilo que a gente vive na prática
@@ -250,13 +325,17 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-16 pt-8 border-t border-[#f0ede8] flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 sm:gap-0 pb-12 lg:pb-0">
-                  <div className="font-playfair text-[#8b4513] italic opacity-80 text-xl font-medium max-w-[280px] leading-snug">
-                    Feliz aniversário e tamo junto sempre! Te amo meu irmão.
+                <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-[#f0ede8] pt-8 pb-12 sm:flex-row sm:items-end sm:gap-0 lg:pb-0">
+                  <div className="font-playfair max-w-[280px] text-xl leading-snug font-medium text-[#8b4513] italic opacity-80">
+                    Feliz aniversário e tamo junto sempre!
                   </div>
-                  <div className="text-left sm:text-right mt-4 sm:mt-0">
-                    <p className="text-[10px] uppercase tracking-widest opacity-40 font-bold mb-1">Com carinho,</p>
-                    <p className="font-playfair text-2xl font-bold italic text-[#2d2a26]">Guilherme</p>
+                  <div className="mt-4 text-left sm:mt-0 sm:text-right">
+                    <p className="mb-1 text-[10px] font-bold tracking-widest uppercase opacity-40">
+                      Com carinho,
+                    </p>
+                    <p className="font-playfair text-2xl font-bold text-[#2d2a26] italic">
+                      Guilherme
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -265,5 +344,5 @@ export default function Home() {
         )}
       </AnimatePresence>
     </main>
-  );
+  )
 }
